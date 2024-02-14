@@ -128,7 +128,7 @@ else
           </div>
           <div class="modal-body ">
 
-            <form action="<?php $_SERVER['REQUEST_URI']?>" method="post" enctype="multipart/form-data">
+            <!-- <form action="<?php $_SERVER['REQUEST_URI']?>" method="post" enctype="multipart/form-data">
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">DESCRIPTION</label>
                 <input type="text" name="description" class="form-control" id="description" aria-describedby="emailHelp">
@@ -138,7 +138,7 @@ else
                 <input type="file" name="img" class="form-control-file" id="img">
     </div>
               <button type="submit" class="btn btn-primary">POST</button>
-            </form>
+            </form> -->
           </div>
         </div>
       </div>
