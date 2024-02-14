@@ -20,7 +20,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <div class="head">
       <img src="imgs/Navbar.png" alt="" />
     </div>
-
+    
 	<!-- ASide bar -->
     <aside id="myAside">
       <div class="logo" style="margin-top: -45px; margin-left: 50px">
@@ -33,37 +33,79 @@ if (session_status() == PHP_SESSION_NONE) {
             <a href="home.php"><i class="fa fa-3 fa-home" aria-hidden="true"></i>HOME</a>
           </li>
           <li>
-            <a href="explore.php"><i class="fa fa-3 fa-compass" aria-hidden="true"></i>EXPLORE</a>
-          </li>
-          <li>
-            <a href="#"><i class="fa fa-3 fa-comments" aria-hidden="true"></i>MESSAGE</a>
+            <a  href="explore.php"><i class="fa fa-3 fa-compass" aria-hidden="true"></i>EXPLORE</a>
           </li>
         </ul>
       </div>
-        
+      
 <?php
 
-    if(isset($_SESSION['loggedin'])){      
-      echo'<footer>
-        <h5>Welcome <br>'.$_SESSION['user_email'].'</b></h5>
+  if (isset($_SESSION['loggedin'])) 
+  {
+    $email = $_SESSION['user_email'];
 
-        <button class="Btn">
-  
-        <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
-        
-        <div class="text"><a id="logout" href="partials/logout.php">Logout</a></div>
-        
-        </button>
-        
-        
-        
-        
-        </footer>';
+
+    if ($conn) 
+    {
+      // Prepare and execute the SQL query using a prepared statement
+      $stmt = $conn->prepare("SELECT `user-img` FROM `users` WHERE `user_email` = ?");
+      $stmt->bind_param("s", $email);
+      $stmt->execute();
+      $stmt->bind_result($user_img);
+      $imgExits = false;
+      if($stmt->fetch())
+      {
+        if($user_img)
+        {
+          $imgExits = true;
+          $_SESSION['user_img'] = $user_img;
+        }
+        else
+        {
+          $imgExits = false;
+        }
+
       }
-      else {
-        echo '<button class="button"> <a href="login.php">LOGIN</a>
-        </button>';
-      }
+      // Fetch the result
+      if ($imgExits == true) 
+      {
+          // Image is present
+          $stmt->close();
+          // Continue with your code
+          $_SESSION['post_by_img'] = $user_img;
+          echo '<footer>
+          <img src="data:image/jpeg;base64,' . base64_encode($user_img) . '" alt="" height="60em" />';
+        }
+        if($imgExits == false) 
+        {
+          $stmt->close();
+          // Image not found or other error
+          echo '<footer>
+          <img src="imgs/default.jpg" height="60em" width="60em" alt="">';
+        }
+        $_SESSION['post_by_img'] = $user_img;
+      echo '<h5>Welcome <br>' . $_SESSION['user_email'] . '</b></h5>
+      <button class="Btn">
+      <div class="sign">
+      <svg viewBox="0 0 512 512">
+      <!-- SVG path for the button -->
+      </svg>
+      </div>
+      <div class="text"><a id="logout" href="partials/logout.php">Logout</a></div>
+      </button>
+      </footer>';
+    } 
+    else 
+    {
+      echo "Database connection error.";
+    }
+
+  } 
+  else 
+  {
+    echo '<button class="button"> <a href="login.php">LOGIN</a></button>';
+  }
+
       ?>
     </aside>
     

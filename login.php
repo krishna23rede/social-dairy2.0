@@ -36,12 +36,12 @@
                 <div class="buttons ">
                     OR
                     <button class="signup" onclick="toggleBox()"> GET SIGN-UP </button>
-                    <a href="#" class="link">Don't have a account?</a>
+                    <a onclick="toggleBox()" class="link" style="cursor: pointer;" >Don't have a account?</a>
                 </div>
 
             </div>
             <div class="damnsignup" id="damnsignup">
-                <form class="form" action="/social-dairy/partials/_handle_Signup.php" method="post">
+                <form class="form" action="/social-dairy/partials/_handle_Signup.php" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="" class="form-label fs-5">EMAIL</label>
                         <input type="email" class="form-control inps" id="signup-email" name="signup-email">
@@ -54,7 +54,13 @@
                         <label for="" class="form-label fs-5">CONFIRM PASSWORD</label>
                         <input type="password" class="form-control inps" id="signup-cpass" name="signup-cpass">
                     </div>
-              
+                    <div>
+                        <label for="" class="form-label fs-5 ">Add Your Image</label>
+                        <input type="file" name="user-img" class="form-control-file" id="user-img">
+                    </div>
+                    <?php
+
+                    ?>
                     <button class="login">SIGN-UP</button>
                 </form>
             </div>

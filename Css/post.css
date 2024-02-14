@@ -19,13 +19,20 @@
         width: 900px;
         margin-left: 250px;
         margin-top: 70px;
+        margin-bottom: 50px;
     }
     .videos{
       display: flex;
       justify-content: center;
       align-items: center;
-     padding: 0.1rem 0.2rem;
+      padding: 0.1rem 0.2rem;
       margin-top: 20px;
+    }
+    .videos img
+    {
+      max-height: 50rem;
+      max-width: 50rem;
+      margin: 50px;
     }
     .icons{
         display: flex;
@@ -52,7 +59,7 @@
         font-size: 20px;
     }
     #outer-comment{
-      display: none;
+      display: block;
         padding: 10px;
     }
     /* SUB_COMMENT */

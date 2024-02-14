@@ -41,13 +41,15 @@ body {
    width: 50%; 
 }
 .city {
-  display: flex;
+  display: grid;
   justify-content: center;
   align-items: center;
+  grid-template-columns: repeat(5, 0.7fr);
+  margin-left: 20px;
   background: #eaffe8;
   padding: 20px 40px;
   border-radius: 10px;
-
+  
 }
 .cities {
   display: flex;
@@ -57,14 +59,24 @@ body {
   margin: 10px;
   
 }
+.cities a
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .cities img {
   border-radius: 50%;
   gap: 40px;
   width: 100px;
+  height: 100px;
   max-width: 100%;
+  max-height: 100%;
   cursor: pointer;
   transition: 0.4s;
   overflow: hidden;
+  justify-content: center;
 }
 .cities img:hover {
   border-radius: 50%;
@@ -155,10 +167,6 @@ body {
   position: relative;
 }
 
-#myAside footer img {
-  width: 65px;
-  margin-top: 5px;
-}
 
 .search-bar {
   position: absolute;

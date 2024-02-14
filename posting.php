@@ -24,68 +24,77 @@ include "partials/dbconnect.php";
 
   <img src="imgs/Background.png" class="background" alt="">
 
-  <!-- vivek's inserting way of images -->
+  <!-- vivek's fetching way of images -->
   <?php
   $id = $_GET['city_id'];
   $sql = "SELECT * FROM `post` WHERE post_cat_id=$id";
   $result = mysqli_query($conn, $sql);
-  while ($row = mysqli_fetch_assoc($result)) {
-    $post_desc = $row['post_desc'];
-    $post_id = $row['post_id'];
-    $post_img = $row['post_img'];
-    $post_by = $row['post_user_by'];
-    
-
-    echo '
-        <div class="post container">
-    <!-- POST HEADING -->
-    <div class="comment-post-head">
-      <div class="comment-icon">
+  $posthai = false;
+      if($result == null)
+        $posthai = false;
+      else
+        $posthai = true;
+      if($posthai)
+      {
+        while ($row = mysqli_fetch_assoc($result)) {
+          $post_desc = $row['post_desc'];
+          $post_id = $row['post_id'];
+          $post_img = $row['post_img'];
+          $post_by = $row['post_user_by'];
+          $post_by_img = $row['post_by_img'];
+          $timestamp = $row['timestamp'];
+          $year = substr($timestamp,0,4);
+          $month = substr($timestamp,5,2);
+          $day = substr($timestamp,8,2);
       
-      <img src="imgs/Ellipse 3.png" alt="" height="50em">
-    
-      </div>
-      <div class="comment-name">
-        <h1>' . $post_by . '</h1>
-        <a href="post.php?post_id=' . $post_id . '">
-        <p class="post_desc";">' . $post_desc . '</p>
-        </a>
-      </div>
-
-    </div>
-
-    <!-- video  -->
-    <div class="videos" style="display:flex;
-    justify-content:center;
-    align-items:center";>
-    <a href="post.php?post_id=' . $post_id. '">
-    <img src="data:image/jpeg;base64,' . base64_encode($post_img) . '" alt=""/>
-    </a>
-    </div>
-    <div class="icons">
-    <a href="post.php?post_id=' . $post_id . '" style="display:flex;">
-    <i class="fa fa-share-square-o share" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
-    <p class="comment" data-bs-toggle="modal" data-bs-target="#exampleModal">Add a comment</p>
-    </a>
-      <p class="posted">Posted 4h ago</p>
-      </div>
-      </div>
-      ';
-    }
+          // TIME OF POSTED
+          $time = $day."/".$month."/".$year;
+              
+          echo '
+              <div class="post container">
+          <!-- POST HEADING -->
+          <div class="comment-post-head">
+            <div class="comment-icon">
+            
+            <img src="'.$post_by_img.'" alt="" height="50em">
+          
+            </div>
+            <div class="comment-name">
+              <h1>' . $post_by . '</h1>
+              <a href="post.php?post_id=' . $post_id . '">
+              <p class="post_desc";">' . $post_desc . '</p>
+              </a>
+            </div>
+      
+          </div>
+      
+          <!-- video  -->
+          <div class="videos" style="display:flex;
+          justify-content:center;
+          align-items:center";>
+          <a href="post.php?post_id=' . $post_id. '">
+          <img src="data:image/jpeg;base64,' . base64_encode($post_img) . '" alt=""/>
+          </a>
+          </div>
+          <div class="icons">
+          <a href="post.php?post_id=' . $post_id . '" style="display:flex;">
+          <i class="fa fa-share-square-o share" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+          <p class="comment" data-bs-toggle="modal" data-bs-target="#exampleModal">Add a comment</p>
+          </a>
+            <p class="posted">Posted On '.$time.'</p>
+            </div>
+            </div>
+            ';
+          }
+      }
+      else
+      {
+        echo " NO Post bhai";
+      }
   
   ?>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
-<script>
-  function toggleBox() {
-    var box = document.getElementById("outer-comment");
-    if (box.style.display === "none") {
-      box.style.display = "block";
-    } else {
-      box.style.display = "none";
-    }
-  }
-</script>
 
 </html>

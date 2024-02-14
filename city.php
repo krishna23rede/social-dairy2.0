@@ -23,7 +23,7 @@
 <img src="imgs/Background.png" class="background" alt="">
     <?php
       include "partials/dbconnect.php";
-
+      
       
     include 'partials/asidebar.php'
     ?>
@@ -31,21 +31,32 @@
 	<div class="main">
 	
     
-
+    <!-- FETCING THE BANNER OF CITY -->
     <?php
    
       $id=$_GET['city_id'];
       $sql = "SELECT * FROM `cities` WHERE city_id=$id";
       $result = mysqli_query($conn, $sql);
-      while ($row = mysqli_fetch_assoc($result)) {
-          
-        $image_data = $row['Big-Img'];
-        $base64_image = base64_encode($image_data);
-
-        echo '<div class="city-banner">
-        <img src="data:image/jpeg;base64,'. $base64_image .'" alt="">
-        </div>';
-     
+      $citiesbhai = false;
+      if($result)
+        $citiesbhai = true;
+      else
+        $citiesbhai = false;
+      if($citiesbhai)
+      {
+        while ($row = mysqli_fetch_assoc($result)) {
+            
+          $image_data = $row['Big-Img'];
+          $base64_image = base64_encode($image_data);
+  
+          echo '<div class="city-banner">
+          <img src="data:image/jpeg;base64,'. $base64_image .'" alt="">
+          </div>';
+        }
+      }
+      else
+      {
+        echo "No cites bro";
       }
        ?>
          
@@ -66,25 +77,28 @@ if(isset($_SESSION['loggedin']))
     {
       $ps_desc = $_POST['description'];
       $post_by = $_SESSION['user_email'];
+      $post_by_img = $_SESSION['post_by_img'];
+      var_dump($post_by_img);
+
       if (isset($_FILES['img']) && $_FILES['img']['error'] == UPLOAD_ERR_OK) 
       {
         // File is uploaded successfully
         $file = $_FILES['img'];
         $tmp_name = $file['tmp_name'];
         $data = file_get_contents($tmp_name);
-          $sql = "INSERT INTO `post` (`post_desc`, `post_img`, `post_user_by`, `post_cat_id`, `timestamp`) 
+          $sql = "INSERT INTO `post` (`post_desc`, `post_img`, `post_user_by`,`post_by_img`, `post_cat_id`, `timestamp`) 
                   VALUES (?, ?, ?, ?, current_timestamp())";
           $stmt = $conn->prepare($sql);
-          $stmt->bind_param("ssss", $ps_desc, $data, $post_by, $id,);
+          $stmt->bind_param("ssss", $ps_desc, $data, $post_by,$id,);
           $stmt->execute();
       }
-      else
-      {
-        echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>Please Select a Post to upload.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>';
-      }
+    }
+    else
+    {
+      echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>Please Select a Post to upload.
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>';
     }
   }
 }

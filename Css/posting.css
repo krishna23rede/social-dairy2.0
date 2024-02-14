@@ -26,11 +26,6 @@
     margin-top: 0;
 
   }
-
-  .videos img {
-    width: 50rem;
-  }
-
   .comment-icon img {
     cursor: pointer;
   }
@@ -72,7 +67,7 @@
   }
 
   #outer-comment {
-    display: none;
+    display: block;
     padding: 10px;
   }
 

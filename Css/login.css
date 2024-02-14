@@ -1,6 +1,10 @@
+*
+{
+    background: url('imgs/back.png');
+
+}
 body {
     position: fixed;
-    background: url('imgs/back.png');
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -40,6 +44,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    align-self: center;
 }
 
 #loginbox {
@@ -65,9 +70,9 @@ body {
     color: black;
 
 }
-
 .form {
     position: relative;
+    
 }
 
 .buttons {
@@ -98,6 +103,10 @@ body {
 }
 .damnsignup{
     display: none;
+}
+#user-img
+{
+    margin-bottom: 30px;
 }
 .link,
 .link:hover {
